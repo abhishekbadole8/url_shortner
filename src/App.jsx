@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { createContext, useEffect, useState } from 'react'
 import Section from './pages/Homepage/Homepage'
 import "./styles/global.css"
@@ -22,19 +22,26 @@ function App() {
     <UserContext.Provider value={{ API, isLoading, setIsLoading, token, setToken }}>
       <Router>
         <Routes>
-          <Route path='/'
-            element={
-              <Layout>
-                <Route index element={<Section />} />
-              </Layout>
-            } />
-          <Route path='/dashboard' element={
-            <Layout>
-              <Route index element={<Section />} />
-            </Layout>
-          } />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          {localStorage.getItem('authToken') ?
+            <>
+              <Route path='/'
+                element={
+                  <Layout>
+                    <Route element={<Section />} />
+                  </Layout>
+                } />
+              <Route path='/dashboard' element={
+                <Layout>
+                  <Route index element={<Section />} />
+                </Layout>
+              } />
+            </> : <>
+              <Route path='/login' index element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/*' element={<Navigate to='/login'/>} />
+            </>
+            }
+
         </Routes>
       </Router>
     </UserContext.Provider>
