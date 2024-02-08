@@ -1,0 +1,101 @@
+section {
+    padding: 2rem;
+}
+
+.add-note-form {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.note-input {
+    border: 1px solid #ABABAB;
+    padding: .75rem;
+    border-radius: 5px;
+    resize: none;
+    font-weight: bold;
+}
+
+.submit-button {
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: aliceblue;
+    cursor: pointer;
+    font-weight: bold;
+    padding: .6rem .8rem;
+    margin-top: .2rem;
+    margin-bottom: .75rem;
+}
+
+.color-options {
+    width: 200px;
+}
+
+.color-label {
+    font-size: .8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.color-palette {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+}
+
+.color-tag {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid grey;
+}
+
+.color-tag:hover {
+    cursor: pointer;
+}
+
+/* note as here */
+.notes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.note-item {
+    width: 345px;
+    min-height: 50px;
+    overflow-wrap: break-word;
+    border: 1px solid #ABABAB;
+    padding: .75rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+.note-content-box {
+    width: 100%;
+    margin-bottom: .5rem;
+}
+
+.note-content {
+    font-size: .9rem;
+    color: #333;
+}
+
+.note-icon-box {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-left: .5rem;
+}
+
+.note-icon-box svg {
+    color: #ABABAB;
+}
+
+.note-icon-box svg:hover {
+    cursor: pointer;
+    color: #000;
+}
