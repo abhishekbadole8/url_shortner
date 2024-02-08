@@ -1,24 +1,38 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { createContext, useState } from 'react'
-import Footer from './components/Footer/Footer'
-import Header from './components/Header/Header'
+import { createContext, useEffect, useState } from 'react'
 import Section from './pages/Homepage/Homepage'
 import "./styles/global.css"
 import Login from "./pages/Login/Login"
 import Register from './pages/Register/Register'
+import Layout from './components/Layout'
 
 export const UserContext = createContext()
 
 function App() {
-  const API = `http://localhost:5001`
+  const API = `https://url-shortner-2ruv.onrender.com`
   const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem('authToken')
+    setToken(savedToken)
+  }, [!token])
 
   return (
-    <UserContext.Provider value={{ API,isLoading, setIsLoading }}>
+    <UserContext.Provider value={{ API, isLoading, setIsLoading, token, setToken }}>
       <Router>
         <Routes>
-          <Route index path='/' element={<Section />} />
-          <Route path='/dashboard' element={<Section />} />
+          <Route path='/'
+            element={
+              <Layout>
+                <Route index element={<Section />} />
+              </Layout>
+            } />
+          <Route path='/dashboard' element={
+            <Layout>
+              <Route index element={<Section />} />
+            </Layout>
+          } />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>

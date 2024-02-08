@@ -58,14 +58,13 @@ export default function Login() {
         const authToken = await response.data.token;
         localStorage.setItem('authToken', authToken);
         setTimeout(() => {
+          setIsLoading(false);
           navigate('/dashboard')
         }, 4000);
       }
     } catch (error) {
       const errorMsg = error.response ? error.response.data.error : "An error occurred";
       setError((prevError) => ({ ...prevError, generic: errorMsg }));
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -103,7 +102,7 @@ export default function Login() {
           type="submit"
           className={Style.submitButton}
         >
-          {isLoading ? "Loading" : "Login"}
+          {isLoading ? "Loading..." : "Login"}
         </button>
       </form>
     </div>

@@ -139,7 +139,7 @@ export default function Register() {
           className={Style.submitButton}
           disabled={isLoading}
         >
-          {isLoading ? "Loading" : "Register"}
+          {isLoading ? "Loading..." : "Register"}
         </button>
       </form>
     </div>
