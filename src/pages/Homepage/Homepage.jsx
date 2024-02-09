@@ -60,6 +60,7 @@ export default function Section() {
       }
       if (response) {
         setIsLoading(false)
+        fetchUrls()
       }
     } catch (error) {
       console.log("Error fetching notes:", error);
