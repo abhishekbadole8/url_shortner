@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Style from "./Login.module.css";
 import axios from "axios";
 import { UserContext } from "../../App";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate()
-  const { API, isLoading, setIsLoading } = useContext(UserContext)
+  const { API, isLoading, setIsLoading, setToken, token } = useContext(UserContext)
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -57,10 +57,9 @@ export default function Login() {
       if (response) {
         setUserData({ email: "", password: "", })
         const authToken = await response.data.token;
+        setToken(authToken)
         localStorage.setItem('authToken', authToken);
-        setTimeout(() => {
-          navigate('/dashboard')
-        }, 2000);
+        navigate('/dashboard')
       }
     } catch (error) {
       const errorMsg = error.response ? error.response.data.error : "An error occurred";

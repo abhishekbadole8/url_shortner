@@ -4,16 +4,21 @@ import { FaUserCircle } from "react-icons/fa";
 import { UserContext } from "../../App"
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const navigate = useNavigate()
-  const { isLoading, setIsLoading, token } = useContext(UserContext)
+  const { isLoading, setIsLoading, token, setToken } = useContext(UserContext)
   const [isModal, setIsModal] = useState(false)
   const [username, setUsername] = useState('')
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    navigate('/login')
+    toast('Please Wait...')
+    setTimeout(() => {
+      navigate('/login')
+      setToken(null)
+      localStorage.removeItem('authToken')
+    }, 2000);
   }
 
   const getUsername = () => {

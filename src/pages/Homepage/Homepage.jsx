@@ -56,7 +56,7 @@ export default function Section() {
   const removeShortUrl = async (urlId) => {
     toast('Removing Url, Please wait')
     try {
-      const response = await axios.delete(`${API}/api/user/urls/${shortId}`, {
+      const response = await axios.delete(`${API}/api/user/urls/${urlId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -69,17 +69,22 @@ export default function Section() {
     }
   }
 
+  // refresh url
+  const refreshUrl = (urlId) => {
+    toast('work in progress')
+  }
+
   // handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setInputValue((prev) => ({ ...prev, [name]: value }));
   };
 
-    // copy text to clipboard 
+  // copy text to clipboard 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text)
       .then(() => {
-        console.log('url copied');
+        toast('url copied')
       })
       .catch((error) => {
         console.log('error in copying text', error);
@@ -99,7 +104,7 @@ export default function Section() {
             name="original_url"
             value={inputValue.original_url}
             onChange={handleInputChange}
-            placeholder={`Enter Original URL here... Ex:https://www.google.com`}
+            placeholder={`Enter Original URL here... Ex:-https://www.google.com`}
             cols={40}
             className="note-input"
           />
@@ -121,7 +126,7 @@ export default function Section() {
                   </div>
                   <div className="note-icon-box">
                     <FaCopy size={14} onClick={() => copyToClipboard(short_url)} title="Copy Url" />
-                    <TbReload size={16} title="Change Url" onClick={() => removeShortUrl(url_id)} />
+                    <TbReload size={16} title="Change Url" onClick={() => refreshUrl(url_id)} />
                     <MdDelete size={17} onClick={() => handleRemoveNote(url_id)} title="Delete Url" />
                     <a href={short_url} target="_blank" rel="noopener noreferrer"><ImNewTab size={16} title="Open in New Tab" /></a>
                   </div>

@@ -23,7 +23,7 @@ function App() {
     <UserContext.Provider value={{ API, isLoading, setIsLoading, token, setToken }}>
       <Router>
         <Routes>
-          {localStorage.getItem('authToken') ? (
+          {token || localStorage.getItem('authToken') ? (
             <>
               <Route path='/' element={<Layout><Route element={<Section />} /></Layout>} />
               <Route path='/dashboard' element={<Layout><Route index element={<Section />} /></Layout>} />
