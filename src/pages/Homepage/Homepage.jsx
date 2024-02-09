@@ -8,12 +8,15 @@ import { UserContext } from "../../App";
 import { ImNewTab } from "react-icons/im";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FaRegEye } from "react-icons/fa";
 
 export default function Section() {
   const { API, token, isLoading, setIsLoading } = useContext(UserContext)
   const [notes, setNotes] = useState([]);
   const [inputValue, setInputValue] = useState({ original_url: "" });
   const [error, setError] = useState({ generic: "No data found." })
+  const [isEdit, setIsEdit] = useState(false)
+  const [editUrlId, setEditUrlId] = useState(null);
 
   // get all urls
   const fetchUrls = async () => {
@@ -31,24 +34,44 @@ export default function Section() {
     }
   }
 
-  // fetch generate short url
+  // fetch generate short / update url
   const generateShortUrl = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setInputValue({ original_url: "" })
     try {
-      const response = await axios.put(`${API}/api/user/url`,
-        { ...inputValue }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`
-        }
-      });
+      let response;
+      if (isEdit) {
+        await axios.put(`${API}/api/user/urls/${editUrlId}`, {
+          ...inputValue
+        }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`
+          }
+        })
+      } else {
+        await axios.put(`${API}/api/user/url`, {
+          ...inputValue
+        }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+      }
       if (response) {
         setIsLoading(false)
         fetchUrls()
       }
     } catch (error) {
       console.log("Error fetching notes:", error);
+    } finally {
+      setIsLoading(false)
+      if (isEdit) {
+        toast('Updated Successfully...')
+        setIsEdit(false)
+      } else {
+        toast('Converted Successfully...')
+      }
     }
   };
 
@@ -69,9 +92,10 @@ export default function Section() {
     }
   }
 
-  // refresh url
-  const refreshUrl = (urlId) => {
-    toast('work in progress')
+  const handleUpdateUrlInput = (urlId, urlToUpdate) => {
+    setIsEdit(true)
+    setEditUrlId(urlId)
+    setInputValue(prev => ({ ...prev, original_url: urlToUpdate }))
   }
 
   // handle input change
@@ -104,13 +128,13 @@ export default function Section() {
             name="original_url"
             value={inputValue.original_url}
             onChange={handleInputChange}
-            placeholder={`Enter Original URL here... Ex:-https://www.google.com`}
+            placeholder={`Enter Original URL here... Ex:https://www.google.com`}
             cols={40}
             className="note-input"
           />
           <div className="form-actions">
             <button type="submit" className="submit-button" disabled={!inputValue.original_url.trim() || isLoading}>
-              {isLoading ? 'Loading...' : 'Convert URL'}
+              {isLoading ? "Loading..." : isEdit ? "Update URL" : "Convert URL"}
             </button>
           </div>
         </form>
@@ -118,7 +142,7 @@ export default function Section() {
         <div className="notes-list">
           {notes.length ?
             (notes.map((note) => {
-              const { _id, short_url, url_id } = note
+              const { _id, short_url, url_id, visit_count, original_url } = note
               return (
                 <div key={_id} className="note-item">
                   <div className="note-content-box">
@@ -126,9 +150,13 @@ export default function Section() {
                   </div>
                   <div className="note-icon-box">
                     <FaCopy size={14} onClick={() => copyToClipboard(short_url)} title="Copy Url" />
-                    <TbReload size={16} title="Change Url" onClick={() => refreshUrl(url_id)} />
+                    <TbReload size={16} title="Change Url" onClick={() => handleUpdateUrlInput(url_id, original_url)} />
                     <MdDelete size={17} onClick={() => removeShortUrl(url_id)} title="Delete Url" />
                     <a href={short_url} target="_blank" rel="noopener noreferrer"><ImNewTab size={16} title="Open in New Tab" /></a>
+                    <div className="note-icon-eye">
+                      <FaRegEye size={17} />
+                      <span>{visit_count}</span>
+                    </div>
                   </div>
                 </div>
               )

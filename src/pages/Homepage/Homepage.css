@@ -1,6 +1,6 @@
 section {
     padding: 2rem;
-    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .add-note-form {
@@ -64,19 +64,19 @@ section {
     flex-wrap: wrap;
     gap: 1.5rem;
     border-top: 1px solid #efececc2;
-    padding: 1.2rem 0;
+    padding: 1.15rem 0;
 }
 
 .note-item {
     min-height: 70px;
     overflow-wrap: break-word;
     border: 1px solid #ABABAB;
-    padding: .75rem;
+    padding: .7rem;
     border-radius: 5px;
     font-size: 0.85rem;
 }
 
-.note-item-skelton{
+.note-item-skelton {
     width: 345px;
     height: 57.6px;
 }
@@ -98,7 +98,8 @@ section {
     margin-left: .5rem;
 }
 
-.note-icon-box svg {
+.note-icon-box svg,
+.note-icon-eye svg {
     color: #ABABAB;
 }
 
@@ -106,6 +107,19 @@ section {
     cursor: pointer;
     color: #000;
 }
+
+.note-icon-eye {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    margin-left: auto;
+}
+
+.note-icon-eye span {
+    color: #ABABAB;
+    font-size: .6rem;
+}
+
 
 @media only screen and (max-width: 600px) {
     .notes-list {
@@ -129,10 +143,10 @@ section {
 
 @media only screen and (min-width: 1025px) {
     .notes-list {
-        gap: 1.5rem;
+        gap: 1.2rem;
     }
 
     .note-item {
-        width: 350px;
+        width: 349px;
     }
 }
