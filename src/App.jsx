@@ -10,6 +10,7 @@ export const UserContext = createContext()
 
 function App() {
   const API = `https://url-shortner-2ruv.onrender.com`
+
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(null)
 
@@ -22,26 +23,18 @@ function App() {
     <UserContext.Provider value={{ API, isLoading, setIsLoading, token, setToken }}>
       <Router>
         <Routes>
-          {localStorage.getItem('authToken') ?
+          {localStorage.getItem('authToken') ? (
             <>
-              <Route path='/'
-                element={
-                  <Layout>
-                    <Route element={<Section />} />
-                  </Layout>
-                } />
-              <Route path='/dashboard' element={
-                <Layout>
-                  <Route index element={<Section />} />
-                </Layout>
-              } />
-            </> : <>
-              <Route path='/login' index element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/*' element={<Navigate to='/login'/>} />
+              <Route path='/' element={<Layout><Route element={<Section />} /></Layout>} />
+              <Route path='/dashboard' element={<Layout><Route index element={<Section />} /></Layout>} />
             </>
-            }
-
+          ) : (
+            <>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/*' element={<Navigate to='/login' />} />
+            </>
+          )}
         </Routes>
       </Router>
     </UserContext.Provider>

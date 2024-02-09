@@ -20,7 +20,7 @@ export default function Login() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setUserData((prevData) => ({ ...prevData, [name]: value }));
-    setError((prevError) => ({ ...prevError, [name]: "" }));
+    setError((prevError) => ({ ...prevError, [name]: "", generic: "" }));
   };
 
   // form validation
@@ -55,56 +55,69 @@ export default function Login() {
     try {
       const response = await axios.post(`${API}/api/user/login`, userData);
       if (response) {
+        setUserData({ email: "", password: "", })
         const authToken = await response.data.token;
         localStorage.setItem('authToken', authToken);
         setTimeout(() => {
-          setIsLoading(false);
           navigate('/dashboard')
-        }, 4000);
+        }, 2000);
       }
     } catch (error) {
       const errorMsg = error.response ? error.response.data.error : "An error occurred";
       setError((prevError) => ({ ...prevError, generic: errorMsg }));
+    } finally {
+      setIsLoading(false)
     }
   };
 
   return (
-    <div className={Style.login}>
-      <form onSubmit={handleLogin}>
-        <div className={Style.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            placeholder="Enter email..."
-          />
-          {error.email && <p className={Style.errorTag}>{error.email}</p>}
-        </div>
+    <div className={Style.wrapper}>
+      <div className={Style.login}>
+        <form onSubmit={handleLogin}>
 
-        <div className={Style.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            placeholder="Enter password..."
-          />
-          {error.password && <p className={Style.errorTag}>{error.password}</p>}
-          {error.generic && <p className={Style.errorTag}>{error.generic}</p>}
-        </div>
+          <h2 className={Style.projectTitle}>Url Shortner</h2>
 
-        <div className={Style.checkboxGroup} />
+          <div className={Style.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              placeholder="Enter email..."
+            />
+            {error.email && <p className={Style.errorTag}>{error.email}</p>}
+          </div>
 
-        <button
-          type="submit"
-          className={Style.submitButton}
-        >
-          {isLoading ? "Loading..." : "Login"}
-        </button>
-      </form>
+          <div className={Style.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+              placeholder="Enter password..."
+            />
+            {error.password && <p className={Style.errorTag}>{error.password}</p>}
+            {error.generic && <p className={Style.errorTag}>{error.generic}</p>}
+          </div>
+
+          <div className={Style.checkboxGroup} >
+            <label htmlFor="checkbox">~ Create account<span onClick={() => {
+              navigate('/register')
+              setIsLoading(false)
+            }}> <u>Click here</u></span> </label>
+          </div>
+
+          <button
+            type="submit"
+            className={Style.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

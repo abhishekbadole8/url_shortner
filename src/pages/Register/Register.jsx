@@ -69,6 +69,12 @@ export default function Register() {
         ...userData,
       });
       if (response) {
+        setUserData({
+          username: "",
+          email: "",
+          password: "",
+          checkbox: false,
+        })
         setSucessMsg("User Registered, Redirecting to login...")
         setTimeout(() => {
           setIsLoading(false);
@@ -85,63 +91,68 @@ export default function Register() {
   };
 
   return (
-    <div className={Style.register}>
-      <form onSubmit={fetchRegister}>
+    <div className={Style.wrapper}>
 
-        <div className={Style.formGroup}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={userData.username}
-            onChange={handleChange}
-          />
-          {error.username && <p className={Style.errorTag}>{error.username}</p>}
-        </div>
+      <div className={Style.register}>
+        <form onSubmit={fetchRegister}>
 
-        <div className={Style.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-          />
-          {error.email && <p className={Style.errorTag}>{error.email}</p>}
-          {error.generic && <p className={Style.errorTag}>{error.generic}</p>}
-        </div>
+          <h2 className={Style.projectTitle}>Url Shortner</h2>
 
-        <div className={Style.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-          />
-          {error.password && <p className={Style.errorTag}>{error.password}</p>}
-          {successMsg && <p style={{ color: "green" }} className={Style.errorTag}>{successMsg}</p>}
-        </div>
+          <div className={Style.formGroup}>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={userData.username}
+              onChange={handleChange}
+            />
+            {error.username && <p className={Style.errorTag}>{error.username}</p>}
+          </div>
 
-        <div className={Style.checkboxGroup}>
-          <input
-            type="checkbox"
-            name="checkbox"
-            value={userData.checkbox}
-            onChange={handleChange}
-            id={`${error.checkbox && Style.errorCheckbox}`}
-          />
-          <label htmlFor="checkbox">I agree to the terms and conditions</label>
-        </div>
+          <div className={Style.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+            />
+            {error.email && <p className={Style.errorTag}>{error.email}</p>}
+            {error.generic && <p className={Style.errorTag}>{error.generic}</p>}
+          </div>
 
-        <button
-          type="submit"
-          className={Style.submitButton}
-          disabled={isLoading}
-        >
-          {isLoading ? "Loading..." : "Register"}
-        </button>
-      </form>
+          <div className={Style.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
+            {error.password && <p className={Style.errorTag}>{error.password}</p>}
+            {successMsg && <p style={{ color: "green" }} className={Style.errorTag}>{successMsg}</p>}
+          </div>
+
+          <div className={Style.checkboxGroup}>
+            <input
+              type="checkbox"
+              name="checkbox"
+              value={userData.checkbox}
+              onChange={handleChange}
+              id={`${error.checkbox && Style.errorCheckbox}`}
+            />
+            <label htmlFor="checkbox">I agree to the terms and conditions</label>
+          </div>
+
+          <button
+            type="submit"
+            className={Style.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Register"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

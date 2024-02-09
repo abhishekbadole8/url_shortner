@@ -1,18 +1,50 @@
+import { useContext, useEffect, useRef, useState } from "react";
 import Style from "./Header.module.css";
+import { FaUserCircle } from "react-icons/fa";
+import { UserContext } from "../../App"
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function Header() {
+  const navigate = useNavigate()
+  const { isLoading, setIsLoading, token } = useContext(UserContext)
+  const [isModal, setIsModal] = useState(false)
+  const [username, setUsername] = useState('')
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken')
+    navigate('/login')
+  }
+
+  const getUsername = () => {
+    const getToken = localStorage.getItem('authToken')
+    const decode = jwtDecode(getToken)
+    setUsername(decode.username);
+  }
+
+  useEffect(() => {
+    getUsername()
+  }, [token])
+
   return (
     <div className={Style.header}>
-      <h2>
-        <i>URL Shortner</i>
-      </h2>
-
+      <h3 className={Style.projectTitle}>Url Shortner</h3>
       <div className={Style.navigation}>
         <ul>
-          <li className={Style.navigationList}>Contant</li>
+          <li className={Style.navigationList}>User </li>
+          <li className={Style.navigationList}> : {username}</li>
         </ul>
-
-        <div className={Style.profileBurger}></div>
+        <div className={Style.profileBurger}>
+          <FaUserCircle size={38} onClick={() => setIsModal(prev => !prev)} />
+          {isModal &&
+            <div className={Style.modalContainer} >
+              <p>{username}</p>
+              <button className={Style.logoutButton}
+                disabled={isLoading}
+                onClick={handleLogout}
+              >Logout</button>
+            </div>}
+        </div>
       </div>
     </div>
   );
