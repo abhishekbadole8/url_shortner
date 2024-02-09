@@ -60,12 +60,12 @@ export default function Section() {
       }
       if (response) {
         setIsLoading(false)
-        fetchUrls()
       }
     } catch (error) {
       console.log("Error fetching notes:", error);
     } finally {
       setIsLoading(false)
+      fetchUrls()
       if (isEdit) {
         toast('Updated Successfully...')
         setIsEdit(false)
