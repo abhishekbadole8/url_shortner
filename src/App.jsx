@@ -9,8 +9,8 @@ import Layout from './components/Layout'
 export const UserContext = createContext()
 
 function App() {
-  const API = `https://url-shortner-2ruv.onrender.com`
-  // const API = `http://localhost:5001`
+  // const API = `https://url-shortner-2ruv.onrender.com`
+  const API = `http://localhost:5001`
 
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(null)

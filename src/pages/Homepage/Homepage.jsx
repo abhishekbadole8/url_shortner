@@ -60,7 +60,6 @@ export default function Section() {
       }
       if (response) {
         setIsLoading(false)
-        fetchUrls()
       }
     } catch (error) {
       console.log("Error fetching notes:", error);
@@ -115,6 +114,12 @@ export default function Section() {
       })
   }
 
+  const handleVisit = () => {
+    setTimeout(() => {
+      fetchUrls()
+    }, 2000);
+  }
+
   useEffect(() => {
     fetchUrls()
   }, [token])
@@ -152,7 +157,7 @@ export default function Section() {
                     <FaCopy size={14} onClick={() => copyToClipboard(short_url)} title="Copy Url" />
                     <TbReload size={16} title="Change Url" onClick={() => handleUpdateUrlInput(url_id, original_url)} />
                     <MdDelete size={17} onClick={() => removeShortUrl(url_id)} title="Delete Url" />
-                    <a href={short_url} target="_blank" rel="noopener noreferrer"><ImNewTab size={16} title="Open in New Tab" /></a>
+                    <a href={short_url} target="_blank" rel="noopener noreferrer" onClick={() => handleVisit()}><ImNewTab size={16} title="Open in New Tab" /></a>
                     <div className="note-icon-eye">
                       <FaRegEye size={17} />
                       <span>{visit_count}</span>
@@ -164,7 +169,7 @@ export default function Section() {
               <p>{error.generic}</p>
             </div>}
         </div>
-      </section>
+      </section >
 
       <ToastContainer
         position="top-right"
