@@ -27,6 +27,11 @@ export default function Register() {
     setError((prevError) => ({ ...prevError, [name]: "" }))
   };
 
+  const handleCheck = (e) => {
+    setUserData(prev => ({ ...prev, checkbox: !prev.checkbox }))
+    setError((prevError) => ({ ...prevError, [e.target.name]: "" }))
+  }
+
   // form validation
   const validateForm = () => {
     let isValid = true;
@@ -57,6 +62,7 @@ export default function Register() {
     setError(newError);
     return isValid;
   };
+
 
   const fetchRegister = async (e) => {
     e.preventDefault()
@@ -89,7 +95,7 @@ export default function Register() {
       setIsLoading(false)
     }
   };
-
+  console.log(userData);
   return (
     <div className={Style.wrapper}>
 
@@ -138,7 +144,7 @@ export default function Register() {
               type="checkbox"
               name="checkbox"
               value={userData.checkbox}
-              onChange={handleChange}
+              onChange={handleCheck}
               id={`${error.checkbox && Style.errorCheckbox}`}
             />
             <label htmlFor="checkbox">I agree to the terms and conditions</label>
