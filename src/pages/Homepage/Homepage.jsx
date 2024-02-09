@@ -127,7 +127,7 @@ export default function Section() {
                   <div className="note-icon-box">
                     <FaCopy size={14} onClick={() => copyToClipboard(short_url)} title="Copy Url" />
                     <TbReload size={16} title="Change Url" onClick={() => refreshUrl(url_id)} />
-                    <MdDelete size={17} onClick={() => handleRemoveNote(url_id)} title="Delete Url" />
+                    <MdDelete size={17} onClick={() => removeShortUrl(url_id)} title="Delete Url" />
                     <a href={short_url} target="_blank" rel="noopener noreferrer"><ImNewTab size={16} title="Open in New Tab" /></a>
                   </div>
                 </div>
