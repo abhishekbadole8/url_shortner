@@ -95,7 +95,7 @@ export default function Register() {
       setIsLoading(false)
     }
   };
-  console.log(userData);
+  
   return (
     <div className={Style.wrapper}>
 
