@@ -35,6 +35,7 @@ export default function Section() {
   const generateShortUrl = async (e) => {
     e.preventDefault()
     setIsLoading(true)
+    setInputValue({ original_url: "" })
     try {
       const response = await axios.put(`${API}/api/user/url`,
         { ...inputValue }, {
@@ -44,7 +45,6 @@ export default function Section() {
       });
       if (response) {
         setIsLoading(false)
-        setInputValue({ original_url: "" })
         fetchUrls()
       }
     } catch (error) {
@@ -109,7 +109,7 @@ export default function Section() {
             className="note-input"
           />
           <div className="form-actions">
-            <button type="submit" className="submit-button" disabled={!inputValue.original_url.trim()}>
+            <button type="submit" className="submit-button" disabled={!inputValue.original_url.trim() || isLoading}>
               {isLoading ? 'Loading...' : 'Convert URL'}
             </button>
           </div>
