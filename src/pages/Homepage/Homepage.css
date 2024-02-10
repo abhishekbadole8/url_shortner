@@ -18,6 +18,11 @@ section {
     font-weight: bold;
 }
 
+.form-actions {
+    display: flex;
+    flex-direction: column;
+}
+
 .submit-button {
     border: none;
     border-radius: 5px;
@@ -26,8 +31,11 @@ section {
     cursor: pointer;
     font-weight: bold;
     padding: .6rem .8rem;
-    margin-top: .2rem;
-    margin-bottom: .75rem;
+    margin-top: .25rem;
+}
+
+.cancel-button {
+    background-color: red;
 }
 
 .color-options {

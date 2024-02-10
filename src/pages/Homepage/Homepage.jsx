@@ -92,10 +92,19 @@ export default function Section() {
     }
   }
 
+  // handle update icon click
   const handleUpdateUrlInput = (urlId, urlToUpdate) => {
     setIsEdit(true)
     setEditUrlId(urlId)
     setInputValue(prev => ({ ...prev, original_url: urlToUpdate }))
+  }
+
+  // handle cancel button
+  const handleCancel = () => {
+    setIsEdit(false)
+    setEditUrlId(null)
+    setInputValue({ original_url: "" })
+    toast('Update Cancelled...')
   }
 
   // handle input change
@@ -142,6 +151,10 @@ export default function Section() {
             <button type="submit" className="submit-button" disabled={!inputValue.original_url.trim() || isLoading}>
               {isLoading ? "Loading..." : isEdit ? "Update URL" : "Convert URL"}
             </button>
+            {isEdit &&
+              <button type="submit" className="submit-button cancel-button"  onClick={handleCancel}>
+                Cancel
+              </button>}
           </div>
         </form>
         <br />
