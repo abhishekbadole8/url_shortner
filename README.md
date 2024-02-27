@@ -44,8 +44,10 @@ URL Shortener is a web application that allows users to shorten long URLs into m
 ## Usage
 
 1. Register/Login: Create an account or login with the following sample credentials:
+
       Email: test@gmail.com
       Password: test123
+   
 2. Shorten URL: Enter a long URL in the input field and click "Shorten" to generate a shortened URL.
 3. Dashboard: View, edit, or delete your shortened URLs in the dashboard. Track view counts for each link.
 4. Logout: Securely log out of your account to protect your data.
